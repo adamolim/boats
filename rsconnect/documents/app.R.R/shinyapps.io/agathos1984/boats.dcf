@@ -1,0 +1,12 @@
+name: boats
+title: boats
+username: agathos1984
+account: agathos1984
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 11162341
+bundleId: 8232431
+url: https://etabeta.shinyapps.io/boats/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE
