@@ -1,5 +1,6 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-# Rowing
+# Rowing ShinyAPP
+# https://rowingclubbern.shinyapps.io/boats/
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 # Author: Michele Adamoli 03.02.2024

@@ -1,0 +1,12 @@
+name: boats
+title: boats
+username: rowingclubbern
+account: rowingclubbern
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 12075225
+bundleId: 8663718
+url: https://rowingclubbern.shinyapps.io/boats/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE

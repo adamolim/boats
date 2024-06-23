@@ -24,10 +24,12 @@ library(lubridate)
 
 d_RCB_DATA_IMP <- read_csv("input/rcb_data_anonym.csv")
 d_RCB_BOATS_IMP <- read_csv("input/rcb_boats_anonym.csv")
+d_RCB_PROVISIONALDATA_IMP <- read_csv("input/provisional/rcb_data_last_year_extrapolated.csv")
 
 # Join data on boats and tweak some terminology
 
 d_RCB_DATA_00 <- d_RCB_DATA_IMP %>% 
+  bind_rows(d_RCB_PROVISIONALDATA_IMP) %>% 
   filter(SaisonYear > 2010) %>% 
   select(Startzeit, Boot, SaisonYear, Laenge, MitgliedID) %>% 
   left_join(d_RCB_BOATS_IMP) %>% 
@@ -56,7 +58,7 @@ d_RCB_DATA_01 <- d_RCB_DATA_00 %>%
 # Parameters
 
 y_min <- 2010
-y_max <- 2023
+y_max <- 2024
 
 # Vectors of boats
 
