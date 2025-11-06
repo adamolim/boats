@@ -1,110 +1,115 @@
 Boot,Seats,TypeRigging,AllowedGroupIdList,CGig,BootID
-méditation à deux,2,Skull,B,FALSE,67
+méditation à deux,2,Skull,B,FALSE,68
 aotearoa,1,Skull,C,FALSE,6
 bagheera,1,Skull,C,FALSE,10
 argo,1,Skull,B,FALSE,7
-springbok,1,Skull,Privat,FALSE,89
-presto,4,Skull,A,FALSE,77
+springbok,1,Skull,Privat,FALSE,92
+presto,4,Skull,A,FALSE,78
 ballerina bianca,4,Skull,B,FALSE,11
-bouillabaisse,2,Riemen,"B, C",FALSE,18
-stella,1,Skull,A,FALSE,93
+bouillabaisse,2,Riemen,B,FALSE,18
+stella,1,Skull,B,FALSE,96
 flipper,4,Riemen,B,FALSE,33
 ahoi brause,2,Skull,A,FALSE,3
-unser einer,1,Skull,B,FALSE,100
-llyr,1,Skull,B,FALSE,59
-liteboat 1,1,Skull,A,FALSE,54
-akela,2,Skull,B,FALSE,4
-silencio,1,Riemen,B,FALSE,83
-lightning,2,Skull,C,FALSE,52
-swing,4,Skull,C,FALSE,95
-snäppa,1,Skull,"A, B",FALSE,85
+unser einer,1,Skull,B,FALSE,104
+llyr,1,Skull,A,FALSE,60
+liteboat 1,1,Skull,A,FALSE,55
+akela,2,Skull,"A, B",FALSE,4
+silencio,1,Riemen,B,FALSE,86
+lightning,2,Skull,C,FALSE,53
+swing,4,Skull,B,FALSE,98
+snäppa,1,Skull,A,FALSE,88
 Private_14,1,Skull,Privat,FALSE,14
-wallaby,2,Skull,A,FALSE,102
+wallaby,2,Skull,A,FALSE,107
 ausreisser,9,Riemen,B,FALSE,8
-nahla,1,Skull,C,FALSE,68
+nahla,1,Skull,C,FALSE,69
 encore,4,Skull,C,FALSE,29
 balu,1,Skull,C,FALSE,12
 big wig,9,Riemen,B,FALSE,17
 in alis,1,Skull,"C, Privat",FALSE,44
-Private_65,1,Skull,Privat,FALSE,65
-squeeze,4,Skull,B,FALSE,91
-Private_87,2,andere,Privat,FALSE,87
+Private_66,1,Skull,Privat,FALSE,66
+squeeze,4,Skull,B,FALSE,94
+Private_90,2,andere,Privat,FALSE,90
+zz-fremdes boot,1,Skull,,FALSE,113
 infinity,2,Riemen,C,FALSE,45
-Private_64,1,Skull,Privat,FALSE,64
-Private_79,1,Skull,Privat,FALSE,79
+Private_65,1,Skull,Privat,FALSE,65
+Private_80,1,Skull,Privat,FALSE,80
 Private_23,1,Skull,Privat,FALSE,23
-triangel,3,Skull,A,TRUE,99
-nimbus,1,Skull,A,FALSE,69
-eichhörnchen,1,Skull,A,FALSE,26
-Private_75,1,Skull,Privat,FALSE,75
+triangel,3,Skull,A,TRUE,102
+nimbus,1,Skull,A,FALSE,70
+eichhörnchen,1,Skull,A,FALSE,27
+Private_76,1,Skull,Privat,FALSE,76
 biber,2,Skull,A,FALSE,15
-passepartout,4,Skull,A,FALSE,72
-Private_88,1,Skull,Privat,FALSE,88
+passepartout,4,Skull,A,FALSE,73
+Private_91,1,Skull,Privat,FALSE,91
 Private_42,1,Skull,Privat,FALSE,42
-Private_92,1,Skull,Privat,FALSE,92
-sin nombre,1,andere,,FALSE,84
-zz-fremdes boot,1,Skull,,FALSE,108
+Private_95,1,Skull,Privat,FALSE,95
+sin nombre,1,andere,,FALSE,87
 füf stärn,5,Skull,A,TRUE,35
 abfahrt,9,Riemen,C,FALSE,2
 fearless,2,Skull,C,FALSE,31
-Private_51,1,Skull,Privat,FALSE,51
-pole star,1,Skull,B,FALSE,74
-white fang,1,Skull,B,FALSE,105
-Private_78,1,Skull,Privat,FALSE,78
-liteboat 3,1,Skull,A,FALSE,56
-stingray,4,Riemen,C,FALSE,94
+Private_52,1,Skull,Privat,FALSE,52
+pole star,1,Skull,B,FALSE,75
+white fang,1,Skull,B,FALSE,110
+Private_79,1,Skull,Privat,FALSE,79
+liteboat 3,1,Skull,A,FALSE,57
+stingray,4,Riemen,C,FALSE,97
 ci ou di ça ce ça,5,Skull,A,TRUE,22
-liteboat 2,1,Skull,A,FALSE,55
-liteboat 4,1,Skull,A,FALSE,57
-liteboat 5,1,Skull,A,FALSE,58
-poseidon,1,Skull,A,FALSE,76
+liteboat 2,1,Skull,A,FALSE,56
+liteboat 4,1,Skull,A,FALSE,58
+liteboat 5,1,Skull,A,FALSE,59
+poseidon,1,Skull,A,FALSE,77
 Private_19,1,Skull,Privat,FALSE,19
-Private_48,1,Skull,Privat,FALSE,48
+Private_49,1,Skull,Privat,FALSE,49
 badejunge,1,Skull,B,FALSE,9
-empi light,1,Skull,,FALSE,28
-Private_106,1,Skull,Privat,FALSE,106
-kingfisher (salani skiff),1,Skull,B,FALSE,50
+Private_111,1,Skull,Privat,FALSE,111
+kingfisher (salani skiff),1,Skull,B,FALSE,51
 Private_37,1,Skull,Privat,FALSE,37
-luna,1,Skull,,FALSE,61
-zerlina,1,Skull,,FALSE,107
-makadam,1,Skull,,FALSE,62
-finitor,1,Skull,,FALSE,32
-nirmal,1,Skull,,FALSE,70
-giotto,2,Skull,,FALSE,38
-maoam,1,Skull,,FALSE,63
-eagle ray,4,Skull,,FALSE,25
-isis noreia,2,Skull,,FALSE,47
-espresso,2,Skull,,FALSE,30
-wasserläufer,4,Skull,,FALSE,103
-heaven can wait,4,Skull,,FALSE,41
-bär,2,Skull,,FALSE,20
-taxi,1,Skull,,FALSE,98
-lindy,1,Skull,,FALSE,53
-schwanestüpfer,4,Skull,,FALSE,82
-barbapapa,1,Skull,,FALSE,13
-diluvio,2,Skull,,FALSE,24
-kingfisher,2,Riemen,,FALSE,49
-chéribibi,2,Skull,,FALSE,21
-ristretto,2,Skull,,FALSE,80
-riverman,1,Skull,,FALSE,81
-Private_104,1,Skull,Privat,FALSE,104
-sputnik,1,Skull,,FALSE,90
-funi,5,Skull,,TRUE,34
-Private_36,1,Skull,Privat,FALSE,36
-lou,2,Skull,,FALSE,60
-bier,1,Skull,,FALSE,16
-Private_66,1,Skull,Privat,FALSE,66
+volando,1,Skull,,FALSE,105
 Private_43,1,Skull,Privat,FALSE,43
-Private_97,1,Skull,Privat,FALSE,97
+Private_100,1,Skull,Privat,FALSE,100
+Private_36,1,Skull,Privat,FALSE,36
+salani w105 2024,1,Skull,B,FALSE,84
+river racer,2,Skull,"A, B",FALSE,82
+Private_109,1,Skull,Privat,FALSE,109
+luna,1,Skull,,FALSE,62
+bär,2,Skull,,FALSE,20
+zerlina,1,Skull,,FALSE,112
+finitor,1,Skull,,FALSE,32
+makadam,1,Skull,,FALSE,63
+giotto,2,Skull,,FALSE,38
+lindy,1,Skull,,FALSE,54
+maoam,1,Skull,,FALSE,64
+nirmal,1,Skull,,FALSE,71
+barbapapa,1,Skull,,FALSE,13
+eagle ray,4,Skull,,FALSE,26
+heaven can wait,4,Skull,,FALSE,41
+taxi,1,Skull,,FALSE,101
+isis noreia,2,Skull,,FALSE,47
+diluvio,2,Skull,,FALSE,24
+ristretto,2,Skull,,FALSE,81
+espresso,2,Skull,,FALSE,30
+wasserläufer,4,Skull,,FALSE,108
+kingfisher,2,Riemen,,FALSE,50
+schwanestüpfer,4,Skull,,FALSE,85
+chéribibi,2,Skull,,FALSE,21
+bier,1,Skull,,FALSE,16
+riverman,1,Skull,,FALSE,83
+funi,5,Skull,,TRUE,34
+sputnik,1,Skull,,FALSE,93
+jalla jalla,1,Skull,,FALSE,48
+lou,2,Skull,,FALSE,61
 Private_39,1,Skull,Privat,FALSE,39
+Private_67,1,Skull,Privat,FALSE,67
 invictus,1,Skull,,FALSE,46
-eisvogel,4,Riemen,,FALSE,27
-Private_101,1,Skull,Privat,FALSE,101
+eisvogel,4,Riemen,,FALSE,28
+Private_106,1,Skull,Privat,FALSE,106
 #güner,2,Skull,,FALSE,1
-synergie,4,Skull,,FALSE,96
-pippilotta,2,Skull,,FALSE,73
+synergie,4,Skull,,FALSE,99
+pippilotta,2,Skull,,FALSE,74
 anapolyka,3,Skull,,FALSE,5
-speedy,1,Skull,,FALSE,86
-noname,1,Skull,,FALSE,71
+speedy,1,Skull,,FALSE,89
+noname,1,Skull,,FALSE,72
+triglia,3,Skull,A,FALSE,103
+dynamene,2,Skull,B,FALSE,25
 hanger,,andere,,FALSE,40
-liteboat 5,1,Skull,,FALSE,58
+liteboat 5,1,Skull,,FALSE,59

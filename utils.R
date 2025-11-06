@@ -17,16 +17,13 @@ fn_selectInput_discipline <- function(id) {
 
 # UI-function for input boats
 
-fn_selectInput_boat <- function(id, vec_boat) {
-  checkboxGroupInput(
+fn_selectInput_boat <- function(id, vec_boat_choice, vec_boat_selected) {
+  selectizeInput(
     inputId = id,
-    label = "Single",
-    choices = get(vec_boat),
-    selected = sample(get(vec_boat), 3),
-    inline = FALSE,
-    width = NULL,
-    choiceNames = NULL,
-    choiceValues = NULL
+    label = "Boats",
+    choices = get(vec_boat_choice),
+    selected = get(vec_boat_selected),
+    multiple = TRUE
   )
 }
 
@@ -199,6 +196,13 @@ fn_ggplotly_boat <-
 
 fn_ggplotly_overview <-
   function(reactive_data, year_overview) {
+    
+    # Number of boats for the title
+    
+    number_boot_dynamic <- length(reactive_data$Boot %>% unique())
+    
+    # Plot
+    
     ggplotly(
       ggplot(
         reactive_data,
@@ -242,5 +246,7 @@ fn_ggplotly_overview <-
       tooltip = "text"
     ) %>%
       layout(legend = list(title = ""),
-             title = paste0('Situation in ', year_overview))
+             title = paste0('Situation in ', year_overview, ' (n = ', number_boot_dynamic, ')'))
   }
+
+

@@ -24,12 +24,19 @@ library(lubridate)
 
 d_RCB_DATA_IMP <- read_csv("input/rcb_data_anonym.csv")
 d_RCB_BOATS_IMP <- read_csv("input/rcb_boats_anonym.csv")
-d_RCB_PROVISIONALDATA_IMP <- read_csv("input/provisional/rcb_data_last_year_extrapolated.csv")
+
+if(file.exists("input/provisional/rcb_data_last_year_extrapolated.csv")) {
+  d_RCB_PROVISIONALDATA_IMP <- read_csv("input/provisional/rcb_data_last_year_extrapolated.csv")
+} else {
+  d_RCB_PROVISIONALDATA_IMP <- NULL
+}
 
 # Join data on boats and tweak some terminology
 
 d_RCB_DATA_00 <- d_RCB_DATA_IMP %>% 
   bind_rows(d_RCB_PROVISIONALDATA_IMP) %>% 
+  # eliminate zz-fremdes boote !!!!
+  filter(Boot != "zz-fremdes boot") %>% 
   filter(SaisonYear > 2010) %>% 
   select(Startzeit, Boot, SaisonYear, Laenge, MitgliedID) %>% 
   left_join(d_RCB_BOATS_IMP) %>% 
@@ -55,10 +62,19 @@ d_RCB_DATA_01 <- d_RCB_DATA_00 %>%
   summarise(Laenge = sum(Laenge, na.rm = TRUE)) %>% 
   ungroup() 
 
+
 # Parameters
 
 y_min <- 2010
-y_max <- 2024
+y_max <- year(Sys.time())
+
+# Only boats last years
+
+vec_boats_last_year <- d_RCB_DATA_00 %>%
+  filter(SaisonYear == y_max) %>% 
+  select(Boot) %>% 
+  unique() %>% 
+  pull()
 
 # Vectors of boats
 
@@ -68,7 +84,8 @@ d_RCB_BOATS_00 <- d_RCB_BOATS_IMP  %>%
                            Seats == "3" ~ "3x",
                            Seats == "4" ~ "4x/4-",
                            Seats == "5" ~ "4x/4-",
-                           Seats == "9" ~ "8+"))
+                           Seats == "9" ~ "8+"))  %>% 
+  replace_na(list(AllowedGroupIdList = "unknown"))
 
 # Single (club)
 
@@ -78,6 +95,8 @@ BOAT_NAME_1x_CLUB <- d_RCB_BOATS_00 %>%
   select(Boot) %>% 
   pull()
 
+BOAT_NAME_1x_CLUB_SEL <- intersect(BOAT_NAME_1x_CLUB, vec_boats_last_year)
+
 # Single (privat)
 
 BOAT_NAME_1x_PRIVATE <- d_RCB_BOATS_00 %>%
@@ -86,13 +105,17 @@ BOAT_NAME_1x_PRIVATE <- d_RCB_BOATS_00 %>%
   select(Boot) %>% 
   pull()
 
+BOAT_NAME_1x_PRIVATE_SEL <- intersect(BOAT_NAME_1x_PRIVATE, vec_boats_last_year)
+
 # Zweier
 
 BOAT_NAME_2x <- d_RCB_BOATS_00 %>%
   filter(AllowedGroupIdList != "Privat") %>%
-  filter(Seats == "2x/2-") %>% 
+  filter(Seats %in% c("3x", "2x/2-")) %>% 
   select(Boot) %>% 
   pull()
+
+BOAT_NAME_2x_SEL <- intersect(BOAT_NAME_2x, vec_boats_last_year)
 
 # Vierer
 
@@ -101,12 +124,16 @@ BOAT_NAME_4x <- d_RCB_BOATS_00 %>%
   select(Boot) %>% 
   pull()
 
+BOAT_NAME_4x_SEL <- intersect(BOAT_NAME_4x, vec_boats_last_year)
+
 # Achter
 
 BOAT_NAME_8x <- d_RCB_BOATS_00 %>%
   filter(Seats == "8+") %>% 
   select(Boot) %>% 
   pull()
+
+BOAT_NAME_8x_SEL <- intersect(BOAT_NAME_8x, vec_boats_last_year)
 
 
 
@@ -294,7 +321,6 @@ d_ANA_10_8_pct <- d_ANA_10_8 %>%
 # 3.4.1 Skiff ----
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 
-
 # Number of kilometers
 
 d_ANA_SKIFF <- d_RCB_DATA_01 %>%
@@ -309,24 +335,24 @@ d_ANA_SKIFF_CLUB <- d_ANA_SKIFF %>%
 d_ANA_SKIFF_PRIVATE <- d_ANA_SKIFF %>%
   filter(AllowedGroupIdList == "Privat")
 
+
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # 3.4.2 Doubles and pairs ----
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 
-
 # Number of kilometers
 
 d_ANA_DOUBLE <- d_RCB_DATA_01 %>%
-  filter(Seats == "2x/2-") %>% 
+  filter(Seats %in% c("3x", "2x/2-")) %>% 
   filter(AllowedGroupIdList != "Privat"| is.na(AllowedGroupIdList)) %>% 
   group_by(Boot, SaisonYear, AllowedGroupIdList) %>% 
   summarise(Laenge = sum(Laenge, na.rm = FALSE)) %>% 
   ungroup()
 
+
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # 3.4.2 Quads and fours ----
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
-
 
 # Number of kilometers
 
@@ -339,7 +365,7 @@ d_ANA_QUADS <- d_RCB_DATA_01 %>%
 
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
-# 3.4.2 Eeights ----
+# 3.4.2 Eights ----
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 
 # Number of kilometers
@@ -355,19 +381,7 @@ d_ANA_EIGHTS <- d_RCB_DATA_01 %>%
 # 3.5 Overview ----
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 
-# Actual club's boats
 
-vec_boot_ymax <- d_RCB_DATA_01 %>%
-  filter(!str_detect(Boot, "Private")) %>% 
-  filter(SaisonYear == y_max) %>% 
-  filter(!is.na(Laenge)) %>% 
-  select(Boot) %>% 
-  # corrections
-  filter(!Boot %in% c("noname", "zerlina")) %>%
-  # no liteboats
-  filter(!str_detect(Boot, "liteboat|fremdes boot")) %>% 
-  unique() %>% 
-  pull()
   
 
 

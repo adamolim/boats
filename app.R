@@ -6,19 +6,25 @@
 # Author: Michele Adamoli 03.02.2024
 
 
-# install.packages("shiny")
-# install.packages('rsconnect')
-library(shiny) # Web Application Framework for R - Version 1.6.0
-library(shinythemes)
-library(tidyverse) # Easily Install and Load the'Tidyverse' - Version 1.3.0
-library(plotly) # Create Interactive Web Graphics via "plotly.js" - Version 4.9.3
-library(scales)
-library(viridis)
-library(shinymanager)
+# Packages
+
+library(pacman)
+
+p_load(
+  "shiny",
+  "rsconnect",
+  "shinythemes",
+  "tidyverse",
+  "plotly",
+  "scales",
+  "viridis",
+  "shinymanager",
+  "DT"
+)
 
 # Reproductible values
 
-set.seed(3)
+set.seed(5)
 
 # define some basic credentials (on data.frame)
 
@@ -43,6 +49,23 @@ credentials <- data.frame(
 
 source("analysis.R")
 source("utils.R")
+
+vec_sold_boats <- c(
+  "poseidon",
+  "ballerina bianca",
+  "ausreisser",
+  "biber",
+  "ahoi brause",
+  "pole star",
+  "wallaby",
+  "balu",
+  "big wig",
+  "bouillabaisse",
+  "fearless",
+  "flipper",
+  "nahla",
+  "nimbus",
+  "stella")
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # User interface ####
@@ -104,10 +127,12 @@ ui <-
             "Boats' statistics"
           )),
           tags$p(
-            "The rowing club Bern constantly renew his boats in order to allow rowers
-            to enjoy this sport and be competitive in regatta. Some boats
-            are nevertheless pretty old and people love them after all. 
-            This plot shows which boats are the oldest and the most used"
+            "The Rowing Club of Bern is constantly renewing its boats so that rowers can
+            to enjoy this sport and to be competitive in regattas. Some boats
+            are quite old and people still love them. 
+            This chart shows which boats are the oldest and most used. Data for 
+            the last year of the time series might be extrapolated on the basis of the
+            existing data."
           ),
           tags$br()
         ),
@@ -134,7 +159,8 @@ ui <-
           # Main panel for displaying outputs
           mainPanel(# Output: Tabset w/ plot, summary, and table
             
-            plotlyOutput("overview")))
+            plotlyOutput("overview_plot"),
+            DTOutput('overview_table')))
       )
     ),
     
@@ -350,7 +376,9 @@ ui <-
             sidebarPanel(
               # Input for the boat: einer
               
-              fn_selectInput_boat(id = "Boat1_club", vec_boat = "BOAT_NAME_1x_CLUB"),
+              fn_selectInput_boat(id = "Boat1_club",
+                                  vec_boat_choice = "BOAT_NAME_1x_CLUB",
+                                  vec_boat_selected = "BOAT_NAME_1x_CLUB_SEL"),
               
               fn_sliderInput_boat_first_year("Boat1_club"),
               
@@ -409,7 +437,9 @@ ui <-
             sidebarPanel(
               # Input for the boat: einer
               
-              fn_selectInput_boat(id = "Boat1_private", vec_boat = "BOAT_NAME_1x_PRIVATE"),
+              fn_selectInput_boat(id = "Boat1_private", 
+                                  vec_boat_choice = "BOAT_NAME_1x_PRIVATE",
+                                  vec_boat_selected = "BOAT_NAME_1x_PRIVATE_SEL"),
               
               fn_sliderInput_boat_first_year("Boat1_private"),
               
@@ -428,10 +458,10 @@ ui <-
         )
       ),
       
-      # 4.1.2 Doubles  ####
+      # 4.1.2 Doubles (and 3x) ####
       
       tabPanel(
-        "Doubles and pairs",
+        "Doubles and pairs (and 3x)",
         
         # Page
         
@@ -444,7 +474,7 @@ ui <-
               height = 45,
               align = "right"
             ),
-            "Doubles and pairs"
+            "Doubles and pairs (and 3x)"
           )),
           
           # Add the description of the tabPanel with a new div tag
@@ -468,7 +498,9 @@ ui <-
             sidebarPanel(
               # Input for the boat: einer
               
-              fn_selectInput_boat(id = "Boat2", vec_boat = "BOAT_NAME_2x"),
+              fn_selectInput_boat(id = "Boat2",
+                                  vec_boat_choice = "BOAT_NAME_2x",
+                                  vec_boat_selected = "BOAT_NAME_2x_SEL"),
               
               fn_sliderInput_boat_first_year("Boat2"),
               
@@ -527,7 +559,9 @@ ui <-
             sidebarPanel(
               # Input for the boat: einer
               
-              fn_selectInput_boat(id = "Boat4", vec_boat = "BOAT_NAME_4x"),
+              fn_selectInput_boat(id = "Boat4", 
+                                  vec_boat_choice = "BOAT_NAME_4x", 
+                                  vec_boat_selected = "BOAT_NAME_4x_SEL"),
               
               fn_sliderInput_boat_first_year("Boat4"),
               
@@ -582,7 +616,9 @@ ui <-
                    sidebarPanel(
                      # Input for the boat: einer
                      
-                     fn_selectInput_boat(id = "Boat8", vec_boat = "BOAT_NAME_8x"),
+                     fn_selectInput_boat(id = "Boat8", 
+                                         vec_boat_choice = "BOAT_NAME_8x", 
+                                         vec_boat_selected = "BOAT_NAME_8x_SEL"),
                      
                      fn_sliderInput_boat_first_year("Boat8"),
                      
@@ -626,8 +662,9 @@ ui <-
         tags$div(
           tags$p(
             "Underlying data have been fully anonymized. The information provided within 
-            this application is intended for internal use only.
-            It is provided without warranty and under GNU General Public License v3. 
+            this application is intended for internal use only. Data for the last year of 
+            time series might be extrapolated on the basis of existing data.
+            It is provided without warranty and under GNU General Public License v3 (https://github.com/RowingClubBern1919/rcb_2024). 
             More information available by sport@rowing.ch or adamolim@gmail.com."
           )
         )
@@ -1068,30 +1105,52 @@ server <- function(input, output) {
     
   })
   
-  # 5. Oveview #####
+  # 5. Oveview plot #####
   
-  output$overview <- renderPlotly({
+  output$overview_plot <- renderPlotly({
     # Define years and boats
     
     year_overview <- input$year_overview
     
+    # Actual club's boats
+    
+    vec_boot_dynamic <- d_RCB_DATA_01 %>%
+      filter(SaisonYear == year_overview) %>%
+      filter(!is.na(Laenge)) %>%
+      select(Boot) %>%
+      # corrections
+      filter(!str_detect(Boot, "Private")) %>%
+      filter(!Boot %in% c("noname", "zerlina", "springbok")) %>%
+      # sold boats
+      filter(
+        if (year_overview >= year(Sys.time()))
+        { ! Boot %in% vec_sold_boats
+        } else {
+          ! Boot %in% NULL
+        }
+      ) %>%
+      # no liteboats
+      filter(!str_detect(Boot, "liteboat|fremdes boot")) %>%
+      unique() %>%
+      pull()
+
     # Process data
     
     d_ANA_OVERVIEW_00 <- d_RCB_DATA_01 %>%
       filter(SaisonYear <= year_overview) %>%
-      filter(Boot %in%  vec_boot_ymax) %>%
+      filter(Boot %in%  vec_boot_dynamic) %>%
       select(Boot, SaisonYear) %>%
       unique() %>%
       count(Boot, name = "Age")
     
     d_ANA_OVERVIEW_READY <- d_RCB_DATA_01 %>%
       filter(SaisonYear <= year_overview) %>%
-      filter(Boot %in%  vec_boot_ymax) %>%
+      filter(Boot %in%  vec_boot_dynamic) %>%
       group_by(Boot, Seats) %>%
-      summarise(Laenge = sum(Laenge, na.rm = FALSE)) %>%
+      summarise(Laenge = round(sum(Laenge, na.rm = FALSE))) %>%
       ungroup() %>%
       right_join(d_ANA_OVERVIEW_00, by = join_by(Boot)) %>%
-      rename("Cumulated distance (km)" = "Laenge")
+      rename("Cumulated distance (km)" = "Laenge") 
     
     # Plot Overview
     
@@ -1099,6 +1158,66 @@ server <- function(input, output) {
                          year_overview = year_overview)
     
   })
+  
+  # Table
+  
+  output$overview_table  <- renderDT({
+    
+    # year
+    
+    year_overview <- input$year_overview
+    
+    # Actual club's boats
+    
+    vec_boot_dynamic <- d_RCB_DATA_01 %>%
+      filter(SaisonYear == year_overview) %>%
+      filter(!is.na(Laenge)) %>%
+      select(Boot) %>%
+      # corrections
+      filter(!str_detect(Boot, "Private")) %>%
+      filter(!Boot %in% c("noname", "zerlina", "springbok")) %>%
+      # sold boats
+      filter(
+        if (year_overview >= year(Sys.time()))
+        { ! Boot %in% vec_sold_boats
+        } else {
+          ! Boot %in% NULL
+        }
+      ) %>%
+      # no liteboats
+      filter(!str_detect(Boot, "liteboat|fremdes boot")) %>%
+      unique() %>%
+      pull()
+    
+    # Process data
+    
+    d_ANA_OVERVIEW_00 <- d_RCB_DATA_01 %>%
+      filter(SaisonYear <= year_overview) %>%
+      filter(Boot %in%  vec_boot_dynamic) %>%
+      select(Boot, SaisonYear) %>%
+      unique() %>%
+      count(Boot, name = "Age")
+    
+    d_ANA_OVERVIEW_READY <- d_RCB_DATA_01 %>%
+      filter(SaisonYear <= year_overview) %>%
+      filter(Boot %in%  vec_boot_dynamic) %>%
+      group_by(Boot, Seats) %>%
+      summarise(Laenge = round(sum(Laenge, na.rm = FALSE))) %>%
+      ungroup() %>%
+      right_join(d_ANA_OVERVIEW_00, by = join_by(Boot)) %>%
+      rename("Cumulated distance (km)" = "Laenge") 
+    
+    # Table
+    
+    datatable(
+      d_ANA_OVERVIEW_READY %>%
+        arrange(Boot),
+      filter = list(position = 'top'),
+      options = list(pageLength = 20, dom = 'tp'),
+      rownames = FALSE,
+      caption = paste("Boote in ", year_overview))
+    
+    })
   
 }
 
